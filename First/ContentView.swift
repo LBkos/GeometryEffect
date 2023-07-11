@@ -50,20 +50,20 @@ struct ContentView: View {
     }
     
     var smallRectangleView: some View {
-        HStack {
+        HStack(spacing: 16) {
             customRectangle(size: 100)
-            Text("small Rectangle")
-                .font(.subheadline)
+            Text("Rectangle")
+                .font(.title)
                 .matchedGeometryEffect(id: "text", in: tabAnimation)
         }
     }
     
     var bigRectangleView: some View {
         VStack {
-            customRectangle(size: 200)
-            Text("Big Rectangle")
+            customRectangle(size: 150)
+            Text("Rectangle")
                 .foregroundColor(.red)
-                .font(.subheadline)
+                .font(.title)
                 .matchedGeometryEffect(id: "text", in: tabAnimation)
         }
     }
