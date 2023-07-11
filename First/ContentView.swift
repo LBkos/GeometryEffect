@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @Namespace var tabAnimation
+    @Namespace var imageAnimation
+    @Namespace var textAnimation
     @State var select = 0
     
     var body: some View {
@@ -54,7 +56,7 @@ struct ContentView: View {
             customRectangle(size: 100)
             Text("Rectangle")
                 .font(.title)
-                .matchedGeometryEffect(id: "text", in: tabAnimation)
+                .matchedGeometryEffect(id: textAnimation, in: tabAnimation)
         }
     }
     
@@ -64,7 +66,7 @@ struct ContentView: View {
             Text("Rectangle")
                 .foregroundColor(.red)
                 .font(.title)
-                .matchedGeometryEffect(id: "text", in: tabAnimation)
+                .matchedGeometryEffect(id: textAnimation, in: tabAnimation)
         }
     }
         
@@ -72,7 +74,7 @@ struct ContentView: View {
             Image("sky")
                 .resizable()
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                .matchedGeometryEffect(id: "image", in: tabAnimation)
+                .matchedGeometryEffect(id: imageAnimation, in: tabAnimation)
                 .frame(width: size, height: size, alignment: .center)
         }
     }
