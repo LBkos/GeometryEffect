@@ -8,19 +8,78 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Namespace var tabAnimation
+    @State var select = 0
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ScrollView {
+            VStack(spacing: 80) {
+                HStack {
+                    ForEach(0...2, id: \.self) { item in
+                        Text("\(item)")
+                            .font(.title)
+                            .foregroundColor(select == item ? .white : .gray)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal)
+                            .background(
+                                Group {
+                                    if select == item {
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .fill(.blue)
+                                            .matchedGeometryEffect(id: "tab", in: tabAnimation)
+                                    }
+                                }
+                            )
+                            .onTapGesture {
+                                withAnimation(.spring()) {
+                                    select = item
+                                }
+                            }
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                
+                if select == 1 {
+                    bigRectangleView
+                } else {
+                    smallRectangleView
+                }
+            }
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    var smallRectangleView: some View {
+        HStack {
+            customRectangle(size: 100)
+            Text("small Rectangle")
+                .font(.subheadline)
+                .matchedGeometryEffect(id: "text", in: tabAnimation)
+        }
     }
-}
+    
+    var bigRectangleView: some View {
+        VStack {
+            customRectangle(size: 200)
+            Text("Big Rectangle")
+                .foregroundColor(.red)
+                .font(.subheadline)
+                .matchedGeometryEffect(id: "text", in: tabAnimation)
+        }
+    }
+        
+        func customRectangle(size: CGFloat) -> some View {
+            Image("sky")
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .matchedGeometryEffect(id: "image", in: tabAnimation)
+                .frame(width: size, height: size, alignment: .center)
+        }
+    }
+    
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
